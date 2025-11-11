@@ -2,9 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import profileimg from "../../assets/application-analytics/profile_img.png";
 import styles from "./UserInfoComponent.module.css";
 
+// import {formatName} from "../../utils/formatName"
 const UserInfoComponent = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const employeeName = localStorage.getItem("empName");
+  // const designation = localStorage.getItem("designation");
+
+  // const formattedDesignation = formatName(designation);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -20,6 +26,13 @@ const UserInfoComponent = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleLogout = () =>{
+    localStorage.clear();
+    window.location.href = "/login";
+  }
+
+
 
   return (
     <div className={styles.user_info} ref={dropdownRef}>
@@ -50,8 +63,8 @@ const UserInfoComponent = () => {
       <div className={styles.userinfo} onClick={toggleDropdown}>
         <img src={profileimg} alt="Profile" className={styles.profile_img} />
         <div className={styles.user_details}>
-          <p className={styles.username}>Sai Pavan</p>
-          <p className={styles.role}>Role</p>
+          <p className={styles.username}>{employeeName}</p>
+          {/* <p className={styles.role}>{formattedDesignation}</p> */}
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +119,7 @@ const UserInfoComponent = () => {
             </svg>{" "}
             Profile
           </button>
-          <button className={styles.dropdown_item}>
+          <button className={styles.dropdown_item} onClick={handleLogout}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

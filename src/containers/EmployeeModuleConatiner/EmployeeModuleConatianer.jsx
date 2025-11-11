@@ -12,104 +12,113 @@ const EmployeeModuleContainer = ({ role }) => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [lastOnboardingStep, setLastOnboardingStep] = useState(0);
 
-  // 1️⃣ When user clicks arrow in the table
+  // --- Step Flow Logic ---
+  const isDO = role === "DO";
+  const totalSteps = isDO ? 3 : 2;
+
   const handleEmployeeSelect = (employee) => {
-    console.log("➡️ Selected Employee:", employee);
     setSelectedEmployee(employee);
     setCurrentView("onboarding");
   };
 
-  // 2️⃣ After completing onboarding
   const handleFinishOnboarding = (lastStepIndex) => {
-    console.log("✅ Onboarding finished. Role:", role);
     setLastOnboardingStep(lastStepIndex);
-    if (role === "DO") setCurrentView("salary");
+
+    if (isDO) setCurrentView("salary");
     else setCurrentView("checklist");
   };
 
-  // 3️⃣ Salary form complete
   const handleSalarySubmitComplete = () => {
-    console.log("💾 Salary details saved");
-    setCurrentView(null);
-    setTimeout(() => setCurrentView("checklist"), 0);
+    setCurrentView("checklist");
   };
 
-  // 4️⃣ Back navigation handlers
   const handleBackToTable = () => setCurrentView("table");
   const handleBackToOnboarding = () => setCurrentView("onboarding");
   const handleBackToSalary = () => setCurrentView("salary");
-  const checklistOnBack = role === "DO" ? handleBackToSalary : handleBackToOnboarding;
 
-  // --------------- TABLE VIEW ----------------
+  const checklistOnBack = isDO ? handleBackToSalary : handleBackToOnboarding;
+
+  // --- Subheading based on current view ---
+  const getSubHeading = () => {
+    switch (currentView) {
+      case "onboarding":
+        return "Employee Preview";
+      case "salary":
+        return "Add Salary Details";
+      case "checklist":
+        return "CheckList";
+      default:
+        return "Employee Preview";
+    }
+  };
+
+  // --- Step Index for Header ---
+  const getCurrentStep = () => {
+    switch (currentView) {
+      case "onboarding":
+        return 1;
+      case "salary":
+        return 2;
+      case "checklist":
+        return isDO ? 3 : 2;
+      default:
+        return 0;
+    }
+  };
+
+  // --- Render Views ---
   if (currentView === "table") {
     return (
       <div className={Styles.widthpptable}>
-      
-              <OnBoardingStatusLayout role={role} onEmployeeSelect={handleEmployeeSelect} />
-            </div>
+        <OnBoardingStatusLayout role={role} onEmployeeSelect={handleEmployeeSelect} />
+      </div>
     );
   }
 
-  // --------------- ONBOARDING VIEW ----------------
-  if (currentView === "onboarding") {
-    return (
-      <div className={Styles.widthpp}>
-        <div className={Styles.moduleWrapper}>
-          <EmployeeOnboardingHeader />
-          <div className={Styles.mainContainer}>
-            <EmployeeProfileContainer employee={selectedEmployee} />
-            <div className={Styles.navSection}>
+  return (
+    <div className={Styles.widthpp}>
+      <div className={Styles.moduleWrapper}>
+        <EmployeeOnboardingHeader
+          step={getCurrentStep()}
+          totalSteps={totalSteps}
+          subHeading={getSubHeading()}
+          onBack={
+            currentView === "onboarding"
+              ? handleBackToTable
+              : currentView === "salary"
+              ? handleBackToOnboarding
+              : checklistOnBack
+          }
+        />
+
+        <div className={Styles.mainContainer}>
+          <EmployeeProfileContainer employee={selectedEmployee} />
+
+          <div className={Styles.navSection}>
+            {currentView === "onboarding" && (
               <OnBoardingEmployeeNav
                 onFinish={handleFinishOnboarding}
                 role={role}
                 initialStep={lastOnboardingStep}
                 onBack={handleBackToTable}
               />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+            )}
 
-  // --------------- SALARY VIEW (DO only) ----------------
-  if (currentView === "salary" && role === "DO") {
-    return (
-      <div className={Styles.widthpp}>
-        <div className={Styles.moduleWrapper}>
-          <EmployeeOnboardingHeader />
-          <div className={Styles.mainContainer}>
-            <EmployeeProfileContainer employee={selectedEmployee} />
-            <div className={Styles.navSection}>
+            {currentView === "salary" && isDO && (
               <AddSalaryDetails
                 onBack={handleBackToOnboarding}
                 onSubmitComplete={handleSalarySubmitComplete}
               />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+            )}
 
-  // --------------- CHECKLIST VIEW ----------------
-  if (currentView === "checklist") {
-    return (
-      <div className={Styles.widthpp}>
-        <div className={Styles.moduleWrapper}>
-          <EmployeeOnboardingHeader />
-          <div className={Styles.mainContainer}>
-            <EmployeeProfileContainer employee={selectedEmployee} />
-            <div className={Styles.navSection}>
+            {currentView === "checklist" && (
               <EmployeeChecklist onBack={checklistOnBack} role={role} />
-            </div>
+            )}
           </div>
         </div>
       </div>
-    );
-  }
-
-  return null;
+    </div>
+  );
 };
 
 export default EmployeeModuleContainer;

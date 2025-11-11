@@ -44,18 +44,21 @@
 .user_details {
   line-height: 1.2;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
  
 .username {
   color: #344054;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   margin: 0;
   letter-spacing: 0.2px;
 }
  
 .role {
-  font-size: 14px;
+  font-size: 11px;
   color: #6c757d;
   margin: 0;
   letter-spacing: 0.2px;
@@ -92,7 +95,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #344054;
+  color: #000000DE;
   display: flex;
   align-items: center;
   gap: 8px;

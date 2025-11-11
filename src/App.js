@@ -10,7 +10,7 @@ import { useAuth } from "./useAuth";
 import Header from "./components/HeaderComponents/Header";
 import SideBarContainer from "./containers/SideBar-container/SideBarContainer";
 import EmployeeModuleContainer from "./containers/EmployeeModuleConatiner/EmployeeModuleConatianer";
-import NewEmployeeOnboarding from "../src/components/OnBoardingStatus/EmployeeonBoardingTable/OnBoardingStatusTable"; // 👈 Add this
+import NewEmployeeOnboarding from "./components/OnBoardingStatus/EmployeeonBoardingTable/OnBoardingStatusTable"; 
 
 // --- 📦 Placeholder / Sample Pages ---
 const Dashboard = () => <div>Dashboard</div>;
@@ -34,11 +34,11 @@ const AccessDeniedPage = () => <div>Access Denied</div>;
 const queryClient = new QueryClient();
 
 function AppWrapper() {
-  const { user } = useAuth(); // Determine if user logged in
+  const { user } = useAuth(); // Determine if user is logged in
 
   return (
     <div className="whole_container">
-      {/* Show sidebar and header only when logged in */}
+      {/* Header + Sidebar visible only when logged in */}
       {user && <Header />}
       {user && (
         <aside>
@@ -46,32 +46,116 @@ function AppWrapper() {
         </aside>
       )}
 
-      <main className="main_content">
+      <main className="main_body">
         <Routes>
           {/* --- 🟢 Public Routes --- */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/access-denied" element={<AccessDeniedPage />} />
 
-          {/* --- 🔒 Protected / Main Routes --- */}
+          {/* --- 🔒 Protected Routes --- */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/application" element={<Application />} />
-          <Route path="/scopes/students" element={<Students />} />
-          <Route path="/fleet" element={<Fleet />} />
-          <Route path="/warehouse" element={<Warehouse />} />
-          <Route path="/sms" element={<Sms />} />
-          <Route path="/question-bank" element={<QuestionBank />} />
-          <Route path="/assets-management" element={<AssetsManagement />} />
-          <Route path="/payments-service" element={<PaymentsService />} />
-          <Route path="/cctv" element={<Cctv />} />
-          <Route path="/hrms" element={<Hrms />} />
-          <Route path="/masters" element={<Masters />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/application"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <Application />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scopes/students"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <Students />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/fleet"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <Fleet />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/warehouse"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <Warehouse />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/sms"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <Sms />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/question-bank"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <QuestionBank />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/assets-management"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <AssetsManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payments-service"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <PaymentsService />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cctv"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <Cctv />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/hrms"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <Hrms />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/masters"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+                <Masters />
+              </ProtectedRoute>
+            }
+          />
 
-          {/* --- 🟦 EMPLOYEE MODULE (Secure DO/CO routes) --- */}
+          {/* --- 🟦 EMPLOYEE MODULE ROUTES --- */}
 
           {/* 🔹 DO ROUTE (District Officer Review) */}
           <Route
-            path="scopes/employee/do-review/:taskId/*"
+            path="/scopes/employee/do-review/:taskId/*"
             element={
               <ProtectedRoute allowedRoles={["DO"]}>
                 <EmployeeModuleContainer role="DO" />
@@ -81,7 +165,7 @@ function AppWrapper() {
 
           {/* 🔹 CO ROUTE (Central Office Review) */}
           <Route
-            path="scopes/employee/co-review/:taskId/*"
+            path="/scopes/employee/co-review/:taskId/*"
             element={
               <ProtectedRoute allowedRoles={["CO"]}>
                 <EmployeeModuleContainer role="CO" />
@@ -89,7 +173,7 @@ function AppWrapper() {
             }
           />
 
-          {/* 🔹 NEW EMPLOYEE ONBOARDING PAGE (opened after right-arrow click) */}
+          {/* 🔹 NEW EMPLOYEE ONBOARDING PAGE */}
           <Route
             path="/new_employee_onboarding"
             element={

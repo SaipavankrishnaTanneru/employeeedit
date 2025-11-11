@@ -2,7 +2,13 @@ import React from "react";
 import ProgressHeader from "../../widgets/ProgressHeader/ProgressHeader";
 import styles from "./EmployeeOnboardingHeader.module.css";
 
-const EmployeeOnboardingHeader = ({ step, totalSteps, onBack }) => {
+const EmployeeOnboardingHeader = ({
+  step,
+  totalSteps,
+  onBack,
+  subHeading = "Employee Preview",
+  mainTitle = "New Employee Onboarding", 
+}) => {
   return (
     <div className={styles.headerContainer}>
       {/* --- Top Row --- */}
@@ -28,7 +34,7 @@ const EmployeeOnboardingHeader = ({ step, totalSteps, onBack }) => {
             </svg>
           </button>
 
-          <h2 className={styles.title}>New Employee Onboarding</h2>
+          <h2 className={styles.title}>{mainTitle}</h2>
         </div>
 
         {/* Right section: Step progress */}
@@ -39,7 +45,7 @@ const EmployeeOnboardingHeader = ({ step, totalSteps, onBack }) => {
 
       {/* --- Centered Subheading --- */}
       <div className={styles.centerSubHeader}>
-        <h3 className={styles.subHeading}>Employee Preview</h3>
+        <h3 className={styles.subHeading}>{subHeading}</h3>
       </div>
     </div>
   );
