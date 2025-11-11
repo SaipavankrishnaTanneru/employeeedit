@@ -1,0 +1,102 @@
+.widgetContainer {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px 20px 10px 20px;
+  width: 100%;
+}
+
+/* Header Row — same as BankInfoWidget */
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 12px;
+  color: #000000;
+}
+
+
+
+/* Father & Mother Blocks */
+.sectionBlock {
+  margin-top: 15px;
+  border-radius: 6px;
+  padding: 15px 20px 10px 20px;
+}
+
+.fatherBlock {
+  background-color: #f6f7ff;
+}
+
+.motherBlock {
+  background-color: #fff5fa;
+  margin-top: 12px;
+}
+
+/* Tag Titles */
+.titleBoxFather,
+.titleBoxMother {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+
+.titleBoxFather {
+  border: 1px solid #3240da;
+  color: #3240da;
+}
+
+.titleBoxMother {
+  border: 1px solid #b22686;
+  color: #b22686;
+}
+
+/* Info Grid (copied from BankInfoWidget) */
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #82808f;
+  margin: 0;
+}
+
+.valueBold {
+  font-weight: 700;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .infoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}

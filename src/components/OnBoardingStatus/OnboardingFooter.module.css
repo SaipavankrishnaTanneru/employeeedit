@@ -1,0 +1,70 @@
+.footerContainer {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 18%;
+  right: 10px;
+  padding: 10px 10px;
+  border: none;
+  z-index: 499;
+
+  /* 🎨 Gradient: top light (10% opacity) → mid (10%) → bottom fully white */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.1) 0%,  
+    rgba(255, 255, 255, 0.738) 10%,  
+    rgba(255, 255, 255, 0.841) 100%    
+  );
+
+
+
+
+  /* Optional subtle shadow for depth
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); */
+}
+
+
+
+
+.center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap:10px;
+}
+
+.right {
+  position: absolute;
+  right: 40px;
+}
+
+.skipButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #3425ff;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.skipIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  margin-top: 2px; /* ✅ adjust icon vertical alignment */
+}
+
+.skipText {
+  text-decoration: underline;
+  text-underline-offset: 3px; /* ✅ make underline lower */
+}
+
+.skipButton:hover .skipText {
+  color: #271ac7;
+}
+
+
