@@ -5,7 +5,7 @@ import Dropdown from "../../../widgets/Dropdown/Dropdown";
 import Inputbox from "../../../widgets/Inputbox/InputBox";
 import dividerline from "../../../assets/EmployeeOnBoarding/dividerline.svg";
 import FormCheckbox from "../../../widgets/FormCheckBox/FormCheckBox";
-import OnboardingFooter from "../OnboardingFooter";
+import OnboardingFooter from "../OnBoardingEmployeeFooter/OnboardingFooter";
 
 const AddSalaryDetails = ({ onBack, onSubmitComplete }) => {
   const initialValues = {

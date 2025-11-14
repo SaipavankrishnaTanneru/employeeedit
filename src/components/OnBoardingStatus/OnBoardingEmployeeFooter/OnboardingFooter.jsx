@@ -1,10 +1,10 @@
 // ✅ FIXED OnboardingFooter — works for DO and CO roles
 import React from "react";
 import styles from "./OnboardingFooter.module.css";
-import Button from "../../widgets/Button/Button";
-import leftarrow from "../../assets/EmployeeOnBoarding/leftarrow";
-import rightarrow from "../../assets/EmployeeOnBoarding/rightarrow";
-import skipicon from "../../assets/EmployeeOnBoarding/skipicon.svg";
+import Button from "../../../widgets/Button/Button";
+import leftarrow from "../../../assets/EmployeeOnBoarding/leftarrow";
+import rightarrow from "../../../assets/EmployeeOnBoarding/rightarrow";
+import skipicon from "../../../assets/EmployeeOnBoarding/skipicon.svg";
 
 const OnboardingFooter = ({
   currentStep,

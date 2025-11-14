@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, #c2c2c2 20%, transparent 100%);
+}
+
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.nameField {
+  align-items: center;
+  gap: 16px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 2px;         
+  font-size: 14px;
+  color: #82808F;
+  cursor: pointer;
+  padding: 10px;     
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 16px;
+  height: 16px; 
+}

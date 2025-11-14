@@ -1,0 +1,33 @@
+.autofill_input_wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.autofill_input_wrapper label {
+  display: block;
+  font-weight: 400;
+  color: #344054;
+  font-size: 12px;
+}
+
+.autofill_input{
+  width: 100%;
+  padding: 12.5px 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #E7E7E7;
+  color: #101828;
+}
+
+.autofill_input::placeholder {
+color:  #101828;
+font-size: 12px;
+font-weight: 400;
+}
+
+.autofill_input:focus{
+  border: 1px solid #424242;
+}

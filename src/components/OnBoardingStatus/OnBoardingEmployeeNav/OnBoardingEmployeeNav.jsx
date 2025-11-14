@@ -1,18 +1,19 @@
 // OnBoardingEmployeeNav.js (Updated)
 import React, { useEffect, useState } from 'react';
-import Stepper from '../../widgets/Stepper/Stepper';
+import Stepper from '../../../widgets/Stepper/Stepper';
 import navStyles from './OnBoardingEmployeeNav.module.css';
-import OnboardingFooter from './OnboardingFooter';
+import OnboardingFooter from '../OnBoardingEmployeeFooter/OnboardingFooter';
 
 // Import tab content
-import WorkingInfo from '../OnBoardingStatus/EmployeeNavOverview/WorkingInfoContainer';
-import FamilyInfo from '../OnBoardingStatus/EmployeeNavOverview/FamilyInfoContainer';
-import AccountInfoContainer from '../OnBoardingStatus/EmployeeNavOverview/AccountInfoContainer';
-import CategoryInfo from '../OnBoardingStatus/EmployeeNavOverview/CategoryInfoContainer';
-import QualificationInfo from '../OnBoardingStatus/EmployeeNavOverview/QualificationInfoContainer';
-import UploadedDocuments from '../OnBoardingStatus/EmployeeNavOverview/UploadedDocumentsContainer';
-import PreviousEmployerInfo from '../OnBoardingStatus/EmployeeNavOverview/PreviousEmployerinfoContainer';
-import SalaryInfoReadOnly from './EmployeeNavOverview/SalaryInfo';
+import WorkingInfo from '../EmployeeNavOverview/WorkingInfoContainer';
+import FamilyInfo from '../EmployeeNavOverview/FamilyInfoContainer';
+import AccountInfoContainer from '../EmployeeNavOverview/AccountInfoContainer';
+import CategoryInfo from '../EmployeeNavOverview/CategoryInfoContainer';
+import QualificationInfo from '../EmployeeNavOverview/QualificationInfoContainer';
+import UploadedDocuments from '../EmployeeNavOverview/UploadedDocumentsContainer';
+import PreviousEmployerInfo from '../EmployeeNavOverview/PreviousEmployerinfoContainer';
+import SalaryInfoReadOnly from '../EmployeeNavOverview/SalaryInfo';
+import AgreementInfoView from '../EmployeeNavOverview/AgreementInfoView';
 
 // --- (All your Icon components) ---
 const IconSalary = () => (
@@ -66,6 +67,16 @@ const IconPrint = () => (<svg width="22" height="22" viewBox="0 0 22 22" fill="n
   <path d="M1.83203 12.8346H15.582M15.582 10.543V16.043M1.83203 10.543V16.043M5.04036 15.5846H8.70703M11.457 15.5846H12.3737" stroke="currentColor" strokeWidth="1.38" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 );
+
+const Agreementicon =()=>(
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.416 1.83398H4.58268C4.07642 1.83398 3.66602 2.24439 3.66602 2.75065V19.2507C3.66602 19.7569 4.07642 20.1673 4.58268 20.1673H17.416C17.9223 20.1673 18.3327 19.7569 18.3327 19.2507V2.75065C18.3327 2.24439 17.9223 1.83398 17.416 1.83398Z" stroke="currentColor" stroke-width="1.46667" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.33203 1.83398H11.457V9.16732L9.39453 7.33398L7.33203 9.16732V1.83398Z" stroke="currentColor" stroke-width="1.46667" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.33203 12.834H11.9154M7.33203 15.584H14.6654" stroke="currentColor" stroke-width="1.46667" stroke-linecap="round"/>
+</svg>
+
+
+)
 // --- End of Icon components ---
 
 const baseTabs = [
@@ -75,6 +86,7 @@ const baseTabs = [
   { label: 'Qualification Info', icon: <IconEducation />, content: <QualificationInfo /> },
   { label: 'Uploaded Documents', icon: <IconDocuments />, content: <UploadedDocuments /> },
   { label: 'Category', icon: <IconReview />, content: <CategoryInfo /> },
+  {label:'Agreement Info',icon:<Agreementicon/>,content:<AgreementInfoView/>},
   { label: 'Account Info', icon: <IconPrint />, content: <AccountInfoContainer /> },
 ];
 

@@ -1,0 +1,104 @@
+.formContainer {
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px 24px;
+  box-sizing: border-box;
+}
+
+/* Section header with divider line */
+.formSectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding-bottom: 16px;
+}
+
+.formSectionTitle h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #82808f;
+  margin: 0;
+}
+
+/* Checkbox area */
+.checkboxContainer {
+  margin-bottom: 16px;
+}
+
+/* Two-column grid for Agreement Info */
+.formGridTwo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-bottom: 24px;
+}
+
+/* Three-column grid for Cheques */
+.formGridThree {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* + Add Cheque Button */
+.addButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.addButton {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.addButton:hover {
+  color: #3425ff;
+  text-decoration: underline;
+}
+
+/* Remove button (optional small X at right) */
+.removeButton {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.removeButton:hover {
+  background: #dc2626;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .formGridTwo,
+  .formGridThree {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .formGridTwo,
+  .formGridThree {
+    grid-template-columns: 1fr;
+  }
+}

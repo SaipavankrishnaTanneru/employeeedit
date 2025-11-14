@@ -1,77 +1,113 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import styles from "./OnBoardingStatusLayout.module.css";
+import { useLocation } from "react-router-dom";
 import leftarrow from "../../../assets/onboarding_status_table/leftarrow.svg";
 import filtericon from "../../../assets/onboarding_status_table/filtericon.svg";
 import SearchBox from "../../../widgets/Searchbox/Searchbox";
 import { searchicon } from "../../../assets/onboarding_status_table/searchicon";
 import OnBoardingStatusTable from "./OnBoardingStatusTable";
+import Button from "../../../widgets/Button/Button";
+import GenericNavTabs from "../../../widgets/NavTabs/GenericNavTabs";
+import StatusFilterPopup from "../../OnBoardingStatus/EmployeeonBoardingTable/StatusFilterPopup/StatusFilterPopup";
+import plusIcon from "../../../assets/onboarding_status_table/PlusIconForOnboardNewEmployee.svg";
+
 
 const OnBoardingStatusLayout = ({ role, onEmployeeSelect }) => {
   // ====== Role-based filter defaults ======
-  const { defaultStatus, filterOptions } = useMemo(() => {
-    const isCO = role === "CO";
-    const pendingStatus = isCO ? "Pending with DO" : "Pending with CO";
-    const options = ["All", "Completed", "Incomplete", pendingStatus];
-    return { defaultStatus: pendingStatus, filterOptions: options };
+  const { filterOptions } = useMemo(() => {
+    const options = [
+      "Completed",
+      "Incomplete",
+      "Pending With CO",
+      "Pending With DO",
+      "Skill Test Approval",
+      "Skill Test Approved",
+      "Rejected",
+      "Left"
+    ];
+    return { filterOptions: options };
   }, [role]);
-
+ 
   // ====== State ======
+  const location = useLocation();
   const [searchValue, setSearchValue] = useState("");
   const [showFilter, setShowFilter] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState(defaultStatus);
-  const [activeTab, setActiveTab] = useState("onboarding");
-  const filterRef = useRef(null);
-
-  // ====== Hide filter popup on outside click ======
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (filterRef.current && !filterRef.current.contains(event.target)) {
-        setShowFilter(false);
+  const [selectedStatus, setSelectedStatus] = useState("");
+ 
+  // Get base path by removing any existing tab segments
+  const getBasePath = () => {
+    let basePath = location.pathname;
+    // Remove any existing tab segments from the end
+    const tabSegments = ['/onboarding', '/skillTest', '/agreements'];
+    for (const segment of tabSegments) {
+      if (basePath.endsWith(segment)) {
+        basePath = basePath.slice(0, -segment.length);
+        break;
       }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
+    }
+    return basePath;
+  };
+ 
+  const basePath = getBasePath();
+ 
+  // Determine activeTab from pathname (check which segment is at the end)
+  const getActiveTabFromPath = () => {
+    const pathname = location.pathname;
+    if (pathname.endsWith('/agreements')) {
+      return 'agreements';
+    } else if (pathname.endsWith('/skillTest')) {
+      return 'skillTest';
+    } else if (pathname.endsWith('/onboarding')) {
+      return 'onboarding';
+    }
+    return 'onboarding'; // default
+  };
+ 
+  const activeTab = getActiveTabFromPath();
+ 
   // ====== Handlers ======
   const handleStatusChange = (status) => {
-    setSelectedStatus(status === "All" ? "" : status);
+    setSelectedStatus(status);
     setShowFilter(false);
   };
-
+ 
   const handleClearFilter = () => setSelectedStatus("");
-
+ 
   const handleSearchChange = (newValue) => setSearchValue(newValue);
-
+ 
+  const handleFilterClose = () => setShowFilter(false);
+ 
   // ====== JSX ======
   return (
     <div className={styles.container}>
       {/* 🔹 Header Section */}
-      <figure className={styles.header}>
-        <img src={leftarrow} alt="Back" className={styles.arrowIcon} />
-        <figcaption>Onboarding Status</figcaption>
-      </figure>
-
-      {/* 🔹 Segmented Tabs */}
-      <div className={styles.segmentedControl}>
-        <button
-          className={`${styles.segment} ${
-            activeTab === "onboarding" ? styles.active : ""
-          }`}
-          onClick={() => setActiveTab("onboarding")}
-        >
-          Onboarding Status
-        </button>
-        <button
-          className={`${styles.segment} ${
-            activeTab === "skillTest" ? styles.active : ""
-          }`}
-          onClick={() => setActiveTab("skillTest")}
-        >
-          Skill Test Approval
-        </button>
+      <div className={styles.header}>
+        <figure>
+          <img src={leftarrow} alt="Back" className={styles.arrowIcon} />
+          <figcaption>Onboarding Status</figcaption>
+        </figure>
+        <Button
+          buttonname="Onboard New Employee"
+          lefticon={<img src={plusIcon} alt="Plus" />}
+          variant="primary"
+          onClick={() => {
+            // Add your navigation or action handler here
+            console.log("Onboard New Employee clicked");
+          }}
+        />
       </div>
-
+ 
+      {/* 🔹 Segmented Tabs */}
+      <div className={styles.tabsContainer}>
+        <GenericNavTabs
+          tabs={[
+            { id: 1, label: "Onboarding Status", path: basePath + "/onboarding" },
+            { id: 2, label: "Skill Test Approval", path: basePath + "/skillTest" },
+            { id: 3, label: "Agreements", path: basePath + "/agreements" }
+          ]}
+        />
+      </div>
+ 
       {/* 🔹 Search + Filter Row */}
       <div className={styles.filterRow}>
         {/* Left: Filter Badge */}
@@ -83,8 +119,20 @@ const OnBoardingStatusLayout = ({ role, onEmployeeSelect }) => {
                   ? styles.completedBadge
                   : selectedStatus === "Incomplete"
                   ? styles.incompleteBadge
+                  : selectedStatus === "Pending With CO"
+                  ? styles.pendingWithCOBadge
+                  : selectedStatus === "Pending With DO"
+                  ? styles.pendingWithDOBadge
                   : selectedStatus.includes("Pending")
                   ? styles.pendingBadge
+                  : selectedStatus === "Skill Test Approval"
+                  ? styles.skillTestApprovalBadge
+                  : selectedStatus === "Skill Test Approved"
+                  ? styles.skillTestApprovedBadge
+                  : selectedStatus === "Rejected"
+                  ? styles.rejectedBadge
+                  : selectedStatus === "Left"
+                  ? styles.leftBadge
                   : styles.allBadge
               }`}
             >
@@ -95,7 +143,7 @@ const OnBoardingStatusLayout = ({ role, onEmployeeSelect }) => {
             </div>
           )}
         </div>
-
+ 
         {/* Right: Search and Filter */}
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <div className={styles.searchWrapper}>
@@ -106,41 +154,29 @@ const OnBoardingStatusLayout = ({ role, onEmployeeSelect }) => {
               onValueChange={handleSearchChange}
             />
           </div>
-
+ 
           {/* Filter Icon */}
           <figure
             className={styles.filterFigure}
             onClick={() => setShowFilter((prev) => !prev)}
-            ref={filterRef}
           >
             <img src={filtericon} alt="Filter" className={styles.filterIcon} />
             <figcaption>Status</figcaption>
             {selectedStatus && <span className={styles.redDot}></span>}
-
-            {/* Popup */}
-            {showFilter && (
-              <div className={styles.filterPopup}>
-                <h4>Employee Status</h4>
-                {filterOptions.map((status) => (
-                  <label key={status} className={styles.checkboxLabel}>
-                    <input
-                      type="checkbox"
-                      checked={
-                        status === "All"
-                          ? selectedStatus === ""
-                          : selectedStatus === status
-                      }
-                      onChange={() => handleStatusChange(status)}
-                    />
-                    {status}
-                  </label>
-                ))}
-              </div>
-            )}
           </figure>
+ 
+          {/* Status Filter Popup */}
+          <StatusFilterPopup
+            open={showFilter}
+            filterOptions={filterOptions}
+            selectedStatus={selectedStatus}
+            onStatusChange={handleStatusChange}
+            onClose={handleFilterClose}
+            onApply={handleStatusChange}
+          />
         </div>
       </div>
-
+ 
       {/* 🔹 Table Section */}
       <OnBoardingStatusTable
         selectedStatus={selectedStatus}
@@ -150,5 +186,5 @@ const OnBoardingStatusLayout = ({ role, onEmployeeSelect }) => {
     </div>
   );
 };
-
+ 
 export default OnBoardingStatusLayout;

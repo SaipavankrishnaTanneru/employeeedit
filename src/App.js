@@ -10,7 +10,10 @@ import { useAuth } from "./useAuth";
 import Header from "./components/HeaderComponents/Header";
 import SideBarContainer from "./containers/SideBar-container/SideBarContainer";
 import EmployeeModuleContainer from "./containers/EmployeeModuleConatiner/EmployeeModuleConatianer";
-import NewEmployeeOnboarding from "./components/OnBoardingStatus/EmployeeonBoardingTable/OnBoardingStatusTable"; 
+
+// --- 🟦 Employee Onboarding Pages ---
+import NewEmployeeOnboardingTable from "./components/OnBoardingStatus/EmployeeonBoardingTable/OnBoardingStatusTable";
+import NewEmployeeOnboarding from "./containers/EmployeeFormsConatiner/EmployeeFormsContainer";
 
 // --- 📦 Placeholder / Sample Pages ---
 const Dashboard = () => <div>Dashboard</div>;
@@ -34,11 +37,10 @@ const AccessDeniedPage = () => <div>Access Denied</div>;
 const queryClient = new QueryClient();
 
 function AppWrapper() {
-  const { user } = useAuth(); // Determine if user is logged in
+  const { user } = useAuth();
 
   return (
     <div className="whole_container">
-      {/* Header + Sidebar visible only when logged in */}
       {user && <Header />}
       {user && (
         <aside>
@@ -48,20 +50,24 @@ function AppWrapper() {
 
       <main className="main_body">
         <Routes>
+          
           {/* --- 🟢 Public Routes --- */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/access-denied" element={<AccessDeniedPage />} />
 
-          {/* --- 🔒 Protected Routes --- */}
+          {/* Redirect to dashboard */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+          {/* --- 🔒 Protected Routes --- */}
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+              <ProtectedRoute allowedRoles={["DO", "CO", "HR"]}>
                 <Dashboard />
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/application"
             element={
@@ -70,6 +76,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/scopes/students"
             element={
@@ -78,6 +85,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/fleet"
             element={
@@ -86,6 +94,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/warehouse"
             element={
@@ -94,6 +103,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/sms"
             element={
@@ -102,6 +112,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/question-bank"
             element={
@@ -110,6 +121,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/assets-management"
             element={
@@ -118,6 +130,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/payments-service"
             element={
@@ -126,6 +139,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/cctv"
             element={
@@ -134,6 +148,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/hrms"
             element={
@@ -142,6 +157,7 @@ function AppWrapper() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/masters"
             element={
@@ -173,15 +189,46 @@ function AppWrapper() {
             }
           />
 
-          {/* 🔹 NEW EMPLOYEE ONBOARDING PAGE */}
+          {/* 🔹 HR ROUTE (HR Employee Review) */}
           <Route
-            path="/new_employee_onboarding"
+            path="/scopes/employee/hr-review/:taskId/*"
             element={
-              <ProtectedRoute allowedRoles={["DO", "CO"]}>
+              <ProtectedRoute allowedRoles={["HR"]}>
+                <EmployeeModuleContainer role="HR" />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 🔹 NEW EMPLOYEE ONBOARDING TABLE PAGE */}
+          <Route
+            path="/scopes/employee/new_employee_onboarding"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO", "HR"]}>
+                <NewEmployeeOnboardingTable />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 🔹 NEW EMPLOYEE ONBOARDING FORM (DO + CO + HR) */}
+          <Route
+            path="/scopes/employee/new-employee-onboarding/*"
+            element={
+              <ProtectedRoute allowedRoles={["DO", "CO", "HR"]}>
                 <NewEmployeeOnboarding />
               </ProtectedRoute>
             }
           />
+
+          {/* 🔹 HR SPECIAL ENTRY INTO ONBOARDING */}
+          <Route
+            path="/scopes/employee/hr/new-employee-onboarding/*"
+            element={
+              <ProtectedRoute allowedRoles={["HR"]}>
+                <NewEmployeeOnboarding />
+              </ProtectedRoute>
+            }
+          />
+
         </Routes>
       </main>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import EmployeeOnboardingHeader from "../../components/EmployeeModuleHeaderComponent/EmployeeOnboardingHeader";
-import OnBoardingEmployeeNav from "../../components/OnBoardingStatus/OnBoardingEmployeeNav";
+import OnBoardingEmployeeNav from "../../components/OnBoardingStatus/OnBoardingEmployeeNav/OnBoardingEmployeeNav";
 import AddSalaryDetails from "../../components/OnBoardingStatus/EmployeeNavOverview/AddSalaryDetails";
 import EmployeeChecklist from "../../components/OnBoardingStatus/DOChecklist/EmployeeChecklist";
 import EmployeeProfileContainer from "../EmployeeProfileContainer/EmployeeProfileConytainer";

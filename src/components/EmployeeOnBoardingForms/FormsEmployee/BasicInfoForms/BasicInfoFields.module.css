@@ -1,0 +1,207 @@
+/* Styles for BasicInfoFields.module.css */
+.container {
+  width: 100%;
+  padding: 10px 10px;
+  overflow-y: auto;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* 3-column grid */
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Spacing between fields in a column */
+}
+
+.genderGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.label {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.genderButtons {
+  display: flex;
+  gap: 8px;
+  width: 68px;
+  height: 34px;
+
+}
+
+.genderBtn {
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 51px;
+  padding: 2px 23px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  transition: all 0.2s ease;
+  flex-grow: 1; /* Make buttons fill space */
+}
+
+/* .genderBtn:hover {
+  background: #f7f7f7;
+} */
+
+.active {
+  background-color: #3425FF;
+  color: #FFFFFF;
+  border: 1px solid #3425FF;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+  margin-top: 8px;
+}
+
+.checkboxContainer input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+/* --- NEW & UPDATED STYLES FOR UPLOADER AND IMAGE PREVIEW --- */
+.profileUploadCircle {
+  width: 160px; /* Matched image size */
+  height: 160px; /* Matched image size */
+  border-radius: 50%;
+  border: 2px solid #3425FF; /* Blue color from your SVG */
+  background-color: #eef2ff; /* Light purple/blue */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-align: center;
+  padding: 16px;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+
+.profileUploadCircle:hover {
+  background-color: #e0e7ff; /* Slightly darker on hover */
+}
+
+.uploadIcon {
+  color: #3425FF; /* Blue icon color from your SVG */
+  margin-bottom: 8px;
+}
+
+.uploadText {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3425FF; /* Blue text color from your SVG */
+  line-height: 1.3;
+}
+
+.profileSection {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center profile pic/uploader in its column */
+  /* No margin-bottom here, let imageWrapper handle spacing */
+}
+
+.imageWrapper {
+  position: relative;
+  display: inline-block;
+  /* Margin at the bottom for the "max image size" text */
+  margin-bottom: 8px; 
+}
+
+.profileImg {
+  width: 180px; /* Adjusted size to be slightly larger for the border */
+  height: 180px; /* Adjusted size to be slightly larger for the border */
+  border-radius: 50%;
+  object-fit: cover;
+  border: 8px solid white; /* Thick white border */
+  box-shadow: 0 0 0 1px #ccc; /* Thin grey outer border */
+}
+.editBtn {
+  position: absolute;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -100%); /* Position above the center */
+  /* --- UPDATED STYLES FOR EDIT BUTTON --- */
+  background: rgba(0, 0, 0, 0.6); /* Dark translucent background */
+  color: white; /* White text */
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none; /* No border for the button itself */
+  box-shadow: none; /* No box-shadow */
+}
+
+.editBtn svg {
+  stroke: white; /* Make the SVG icon white */
+  color: white; /* Fallback for fill if stroke not applicable */
+}
+
+.deleteImageBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50px); /* Position below the center, adjusted for new image size */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10; /* Ensure it's above the image */
+}
+
+.deleteIcon {
+  width: 26px; /* Size for delete icon from your SVG */
+  height: 26px; /* Size for delete icon from your SVG */
+  fill: #FF0000; /* Red color as in the image */
+}
+
+.imageNote {
+  font-size: 14px; /* Increased font size */
+  color: #FF0000; /* Red color as in the image */
+  margin-top: 8px; /* Space between delete icon and text */
+}
+
+.hiddenInput {
+  display: none;
+}
+.formSectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #82808f;
+  margin: 0;
+  padding-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .profileSection {
+    align-items: flex-start;
+  }
+}
